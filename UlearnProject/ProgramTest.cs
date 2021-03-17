@@ -5,8 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace UlearnProject
 {
+    using static TaskChessBoard;
+
     class ProgramTest
     {
 
@@ -61,9 +65,9 @@ namespace UlearnProject
         //  Дано время в часах и минутах. Найти угол от часовой к минутной стрелке на обычных часах.
         public static void AngleBetweenHoursAndMinutes()
         {
-            double hours = 0;
-            double minutes = 0;
-            double angel = 0;
+            double hours;
+            double minutes;
+            double angel;
             bool signAngel = false;
 
             Console.WriteLine("\n\t Введите количество часов от 0 до 12: ");
@@ -86,6 +90,128 @@ namespace UlearnProject
             Console.WriteLine("\t Ответ: Угол между стрелками в {0} часов {1} минут: равен {2}", hours, minutes, angel);
         }
 
+        // Дана начальная и конечная клетки на шахматной доске. 
+        // Корректный ли это ход на пустой доске для: слона, коня, ладьи, ферзя, короля?
+
+        // Решение задания реализованно в классе "TaskChessBoard.cs".
+
+        // Дан номер трамвайного билета, в котором суммы первых трёх цифр и последних трёх цифр отличаются на 1 
+        // (но не сказано, в какую сторону). Правда ли, что предыдущий или следующий билет счастливый?
+
+        // Функция разбиения целого числа на десятичные числа и возвращение суммы этих чисел.
+        public static int SummChangeRightNumber(int temp)
+        {
+            int[] tempArrayNumber = new int[3];
+            tempArrayNumber[0] = temp / 100;
+            tempArrayNumber[1] = (temp / 10) % 10;
+            tempArrayNumber[2] = temp % 10;
+            // Проверка конвертации из целого числа в отдельные числа.
+            Console.WriteLine("Проверка конвертации из целого числа в отдельные числа. Было: " + temp + ". Стало: {0}{1}{2}", tempArrayNumber[0], tempArrayNumber[1], tempArrayNumber[2]);
+            temp = tempArrayNumber[0] + tempArrayNumber[1] + tempArrayNumber[2];
+            return temp;
+        }
+
+        public static void TiketSix()
+        {
+            Console.WriteLine("Введите шестизначное число: ");
+            char[] tiketChar = Console.ReadLine().ToCharArray();
+            int[] tiketInt = new int[6];
+
+            // Переводим введенные символы цифр записанные в Юникоде в числовые значения.
+            for (int i = 0; i < tiketChar.Length; i++)
+            {                
+                tiketInt[i] = int.Parse(tiketChar[i].ToString());
+                Console.WriteLine("{0}. '{1}'", i, tiketInt[i]);
+            }
+
+            int rightNumber = int.Parse(tiketInt[3].ToString() + tiketInt[4].ToString() + tiketInt[5].ToString());
+            int leftSumm = tiketInt[0] + tiketInt[1] + tiketInt[2];
+            int rightSumm = tiketInt[3] + tiketInt[4] + tiketInt[5];
+            int difference = leftSumm - rightSumm;
+
+            if (difference == -1)
+            {
+                Console.WriteLine("Левая часть числа на 1 меньше чем правая.");
+                int temp = rightNumber - 1;
+                
+                if (leftSumm == SummChangeRightNumber(temp))
+                {
+                    Console.WriteLine("Предыдущий билет был счастливым!\t YES");
+                }
+                else Console.WriteLine("Предыдущий билет НЕ был счатсливым\t NO");
+            }
+            else if (difference == 1)
+            {
+                Console.WriteLine("Правая часть числа на 1 меньше чем правая.");
+                int temp = rightNumber + 1;
+                
+                if (leftSumm == SummChangeRightNumber(temp))
+                {
+                    Console.WriteLine("Следующий билет будет счастливым!\t YES");
+                }
+                else Console.WriteLine("Следущий билет НЕ будет счатсливым\t NO");
+            }
+            else
+            {
+                Console.WriteLine("Введенное число не является аргументом решения задачи! NONONONO MFK");
+            }
+        }
+
+        // Найдите минимальную степень двойки, превосходящую заданное число.
+        // Более формально: для заданного числа nn найдите x > nx>n, такой, что x = 2^k
+        // для некоторого натурального k.
+
+        public static void GetMinPowerOfTwoLargerThan()
+        {
+            int result = 0;
+            double two;
+            Console.WriteLine("Введите любое число: ");
+            int numberInput = int.Parse(Console.ReadLine());
+            while (true)
+            {                
+                two = Math.Pow(2,result);
+                result++;
+                if (two > numberInput)
+                    break;
+            }
+            Console.WriteLine("Результат вычислений - \t1. Введенное число: {0}\n" +
+                                "\t\t\t2. Итоговое число: {1}\n" +
+                                "\t\t\t3. Степень двойки: {2}\n",
+                                numberInput, two, result);
+        }
+
+        /*  
+         *  Враги вставили в начало каждого полезного текста целую кучу бесполезных пробельных символов!
+         *  Вася смог справиться с ситуацией, когда такой пробел был один, но продвинуться дальше ему не удается.
+         *  Помогите ему с помощью цикла while.
+        */
+        public static void RemoveStartSpaces()
+        {
+            int i = 0;
+            string text = Console.ReadLine();
+            while (char.IsWhiteSpace(text[i]))
+            {
+                if (text.Length == i+1)
+                {
+                    string str = "";
+                    Console.WriteLine("Итоговый текст:" + str);
+                    break;
+                }
+                if (!(char.IsWhiteSpace(text[i+1])))
+                {
+                    text = text.Substring(i+1);
+                    break;
+                }
+                i++;
+            }
+            Console.WriteLine("Итоговый текст:" + text);
+        }
+
+
+
+
+
+
         static void Main()
         {
             int indexLoop = -1;            
@@ -93,11 +219,15 @@ namespace UlearnProject
             while (indexLoop != 0) {
 
                 Console.WriteLine("\n\n\t Ввыберите варинат задачи: \n" +
-                                "\t 1. Задача - про проценты в банке. \n" +
-                                "\t 2. Задача - Найти сумму всех положительных чисел меньше 1000 кратных 3 или 5. \n" +
-                                "\t 3. Дано время в часах и минутах. Найти угол от часовой к минутной стрелке на обычных часах. \n" +
-                                "\t 4. \n" +
-                                "\t 0. Выход. \n");
+                                    "\t 1. Задача - про проценты в банке. \n" +
+                                    "\t 2. Задача - Найти сумму всех положительных чисел меньше 1000 кратных 3 или 5. \n" +
+                                    "\t 3. Дано время в часах и минутах. Найти угол от часовой к минутной стрелке на обычных часах. \n" +
+                                    "\t 4. Дана начальная и конечная клетки на шахматной доске. \n" +
+                                    "\t 5. Правда ли, что предыдущий или следующий билет счастливый? \n" +
+                                    "\t 6. Найдите минимальную степень двойки, превосходящую заданное число. \n" +
+                                    "\t 7. Вася смог справиться с ситуацией, когда такой пробел был один\n" +
+                                            " но продвинуться дальше ему не удается. Помогите ему с помощью цикла while. \n" +
+                                    "\t 0. Выход. \n");
                 indexLoop = int.Parse(Console.ReadLine());
 
                 switch (indexLoop)
@@ -112,7 +242,16 @@ namespace UlearnProject
                         AngleBetweenHoursAndMinutes();
                         break;
                     case 4:
-                        Console.WriteLine("Решения данной задачи пока нет.");
+                        TaskChessBoard.ChessBoard();
+                        break;
+                    case 5:
+                        TiketSix();
+                        break;
+                    case 6:
+                        GetMinPowerOfTwoLargerThan();
+                        break;
+                    case 7:
+                        RemoveStartSpaces();
                         break;
                     case 0:
                         Console.WriteLine("Завершение работы программы. Нажмите любую клавишу.");
@@ -122,8 +261,6 @@ namespace UlearnProject
                     default: break;
                 }
             }
-            
-
         }
     }
 }

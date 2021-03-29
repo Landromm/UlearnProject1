@@ -234,14 +234,111 @@ namespace UlearnProject
         public static void WriteTextWithBorder()
         {
             Console.WriteLine("Ведите пожалуйста желаемый текст для вывода: ");
-            string textIn = "";
-            textIn = Console.ReadLine();
+            string textIn = Console.ReadLine();
 
             OutPutBorder(textIn);
-
             Console.WriteLine("| " + textIn + " |");
-
             OutPutBorder(textIn);
+        }
+
+        //  Task 9 Условие ---------------------------------------------------------------------------------------
+        //  Помогите Васе переделать этот код так, чтобы он умел выводить доску любого заданного размера.
+        // -------------------------------------------------------------------------------------------------------
+        private static void WriteBoard()
+        {
+            Console.WriteLine("Введите размер шахматной доски: ");
+            int size = int.Parse(Console.ReadLine());
+            int row = 0;
+
+            while (row < size)
+            {
+                if (row % 2 == 0)
+                {
+                    for (int i = 0; i < size; i++)
+                    {   
+                        if (i % 2 == 0)
+                        {
+                            Console.Write("#");
+                        }
+                        else Console.Write(".");
+
+                        if (i == size - 1)
+                            Console.Write("\n");
+                    }
+                    row++;
+                }
+                else 
+                {
+                    for (int i = 0; i < size; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            Console.Write(".");
+                        }
+                        else Console.Write("#");
+
+                        if (i == size - 1)
+                            Console.Write("\n");
+                    }
+                    row++;
+                }
+            }
+        }
+
+        // Альтернативное решение.
+        //  private static void WriteBoard(int size)
+        //  {
+        //      for (int i = 0; i < size; i++)
+        //      {
+        //          var j = 0;
+        //          while (j < size)
+        //          {
+        //              Console.Write((j + i) % 2 == 0 ? "#" : ".");
+        //              j++;
+        //          }
+        //          Console.WriteLine();
+        //      }
+        //      Console.WriteLine();
+        //  }
+
+        //  Task 10 Условие ---------------------------------------------------------------------------------------
+        //  Написать метод поиска индекса максимального элемента. То есть такого числа i,
+        //  что array[i] — это максимальное из чисел в массиве.
+        // -------------------------------------------------------------------------------------------------------- 
+        public static int MaxIndex()
+        {
+            Random random = new Random();
+            double[] array = new double[15];
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.NextDouble() * 100;
+            }
+
+            foreach (double temp in array)
+            {
+                Console.WriteLine(temp);
+            }
+            Console.WriteLine("Максимальное значение: ");
+            Console.WriteLine(array.Max());
+            int index = -1;
+
+            if (array == null)
+            {
+                Console.WriteLine("Масив пуст " + index); ;
+            } 
+
+            for (int i = 0; i < array.Length; i++)
+            {                
+                if (array.Max() == array[i])
+                {
+                    if (index == -1)
+                    {
+                        index = i;
+                    }                    
+                    Console.WriteLine("Найдено максимальное значение под индексом: " + index);
+                }                
+            }
+            return 1;
         }
 
 
@@ -262,6 +359,9 @@ namespace UlearnProject
                                     "\t 7. Вася смог справиться с ситуацией, когда такой пробел был один\n" +
                                             " но продвинуться дальше ему не удается. Помогите ему с помощью цикла while. \n" +
                                     "\t 8. Напишите функцию, которая принимает на вход строку текста и печатает ее на экран в рамочке из символов. \n" +
+                                    "\t 9. Помогите Васе переделать этот код так, чтобы он умел выводить доску любого заданного размера. \n" +
+                                    "\t 10. Написать метод поиска индекса максимального элемента. То есть такого числа i, " +
+                                            "что array[i] — это максимальное из чисел в массиве. \n" +
                                     "\t 0. Выход. \n");
                 indexLoop = int.Parse(Console.ReadLine());
 
@@ -290,6 +390,12 @@ namespace UlearnProject
                         break;
                     case 8:
                         WriteTextWithBorder();
+                        break;
+                    case 9:
+                        WriteBoard();
+                        break;
+                    case 10:
+                        MaxIndex();
                         break;
                     case 0:
                         Console.WriteLine("Завершение работы программы. Нажмите любую клавишу.");
